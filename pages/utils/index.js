@@ -9,12 +9,14 @@ export async function storefront(query, variables = {}){
           query, variables
         }),
       })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        })
+      return response.json();
+        // Include this if you want to handle errors
+        // .then(response => {
+        //   if (!response.ok) {
+        //     throw new Error('Network response was not ok');
+        //   }
+        //   return response.json();
+        // })
         // .then(data => {
         //   console.log('API Response:', data); // Add this line to inspect the API response
         //   if (!data || !data.data || !data.data.products || !data.data.products.edges) {

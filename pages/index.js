@@ -51,8 +51,8 @@ const navigation = [
   { name: 'Company', href: '#' },
 ]
 
-export default function Home({product}) {
-  console.log({product})
+export default function Home({products}) {
+  console.log({products})
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
@@ -157,13 +157,6 @@ export default function Home({product}) {
         </div>
         <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
           <div className="hidden sm:mb-8 sm:flex sm:justify-center">
-            {/* <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-              Announcing our next round of funding.{' '}
-              <a href="#" className="font-semibold text-indigo-600">
-                <span className="absolute inset-0" aria-hidden="true" />
-                Read more <span aria-hidden="true">&rarr;</span>
-              </a>
-            </div> */}
           </div>
           <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
@@ -233,68 +226,98 @@ export default function Home({product}) {
 }
 
 
-// export async function getStaticProps() {
-//   const {data} = await storefront(productsQuery) // our api returns data nested in the object so we need to use deconstructuring {data}
-//   return {
-//     props: {
-//       products: data.products,
-//     },
-//   }
-// }
-
 export async function getStaticProps() {
-  try {
-   const productsQuery = `
-     query {
-       products(first: 10) {
-         edges {
-           node {
-             title
-             images(first: 1) {
-               edges {
-                 node {
-                   originalSrc
-                 }
-               }
-             }
-             variants(first: 1) {
-               edges {
-                 node {
-                   price {
-                     amount
-                   }
-                 }
-               }
-             }
-           }
-         }
-       }
-     }
-   `
-    const { data } = await storefront(productsQuery);
-
-    // Verify that the response contains the necessary data
-    if (!data) {
-      throw new Error('API response does not contain "data"');
-    }
-
-    return {
-      props: {
-        products: data.products,
-      },
-    };
-  } catch (error) {
-    console.error('Error in getStaticProps:', error);
-    return {
-      props: {
-        products: ["Products Not Found"],
-      },
-    };
+  const {data} = await storefront(productsQuery) // our api returns data nested in the object so we need to use deconstructuring {data}
+  return {
+    props: {
+      products: data.products,
+    },
   }
 }
 
-// gql helps to pretify the GraphQL queries
+const gql = String.raw // gql function helps to pretify our query
 
+const productsQuery = gql`
+query {
+  products(first: 10) {
+    edges {
+      node {
+        title
+        images(first: 1) {
+          edges {
+            node {
+              originalSrc
+            }
+          }
+        }
+        variants(first: 1) {
+          edges {
+            node {
+              price {
+                amount
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+`
+
+// export async function getStaticProps() {
+//   try {
+//    const productsQuery = `
+//      query {
+//        products(first: 10) {
+//          edges {
+//            node {
+//              title
+//              images(first: 1) {
+//                edges {
+//                  node {
+//                    originalSrc
+//                  }
+//                }
+//              }
+//              variants(first: 1) {
+//                edges {
+//                  node {
+//                    price {
+//                      amount
+//                    }
+//                  }
+//                }
+//              }
+//            }
+//          }
+//        }
+//      }
+//    `
+    // const { data } = await storefront(productsQuery);
+
+    // Verify that the response contains the necessary data
+//     if (!data) {
+//       throw new Error('API response does not contain "data"');
+//     }
+
+//     return {
+//       props: {
+//         products: data.products,
+//       },
+//     };
+//   } catch (error) {
+//     console.error('Error in getStaticProps:', error);
+//     return {
+//       props: {
+//         products: ["Products Not Found"],
+//       },
+//     };
+//   }
+// }
+
+
+// Another query to try
 //  const productsQuery = `
 //   query {
 //     products(first: 10) {
