@@ -239,23 +239,22 @@ const gql = String.raw // gql function helps to pretify our query
 
 const productsQuery = gql`
 query {
-  products(first: 10) {
+  products(first: 3) {
     edges {
       node {
         title
-        images(first: 1) {
-          edges {
-            node {
-              originalSrc
-            }
+        handle
+        tags
+        priceRange {
+          minVariantPrice {
+            amount
           }
         }
-        variants(first: 1) {
+        images(first:1) {
           edges {
             node {
-              price {
-                amount
-              }
+              url
+              altText
             }
           }
         }
