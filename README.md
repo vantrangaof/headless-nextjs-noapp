@@ -11,7 +11,9 @@ require('@tailwindcss/typography')
 - Then run the app ```npm run dev```
 - Components are Server Components by default. For Client Component, you shall mark as a client entry with "use client"
 
-
+## Notes
+- In case the { products } returned is undefined, you can first test to see if the API endpoint and access key are correct. You can also use a try-catch to make sure the API is returned and figured out what is the actually cause.
+- This project is set to no app.js initiated because of the getStaticProps, which cannot be used in the app itself   
 
 ## About Next.js
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
